@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 __version__ = "0.0.0"
 
-REPO_NAME = "ml_flaskapi" #change the repo name
+REPO_NAME = "ml-flaskapi" #change the repo name
 AUTHOR_USER_NAME = "sathishr11"
 SRC_REPO = "src" #change the src_repo
 AUTHOR_EMAIL = "mail2sathish11@gmail.com"
@@ -22,6 +22,6 @@ setuptools.setup(
     project_urls={
         "Bug Tracker": f"https://github.com/{AUTHOR_USER_NAME}/{REPO_NAME}/issues",
     },
-    package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src")
+    # package_dir={"": "src"},
+    packages=["src"]
 )
