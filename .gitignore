@@ -130,3 +130,16 @@ dmypy.json
 
 # log folder
 .logs/
+
+# artifacts
+artifacts/
+
+# IDE files
+.idea/
+.vscode/
+
+# streamlit secrets
+.streamlit/
+
+# LOGS
+logs/
