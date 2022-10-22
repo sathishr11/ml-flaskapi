@@ -11,22 +11,22 @@ from pathlib import Path
 from box import ConfigBox
 
 
-class Helper():
+class Helper:
     def __init__(self):
         self.config_path = None
         self.params_path = None
 
-    def load_args(self)-> None:
+    def load_args(self) -> None:
         args = argparse.ArgumentParser()
         args.add_argument("--config", "-c", default=CONFIG_FILE_PATH)
         args.add_argument("--params", "-p", default=PARAMS_FILE_PATH)
         parsed_args = args.parse_args()
         self.config_path = parsed_args.config
         self.params_path = parsed_args.params
-        
-    @staticmethod    
+
+    @staticmethod
     @ensure_annotations
-    def read_yaml(path_to_yaml: Path)-> ConfigBox:
+    def read_yaml(path_to_yaml: Path) -> ConfigBox:
         """Read yaml file
 
         Args:
@@ -50,11 +50,13 @@ class Helper():
         """
         for dir_path in dirs:
             os.makedirs(dir_path, exist_ok=True)
-            logger.info(f'Directory {dir_path} created')
+            logger.info(f"Directory {dir_path} created")
 
     @staticmethod
     @ensure_annotations
-    def save_dataframe(data: pd.DataFrame , data_path: Path, logger: logging.Logger, index: bool =False):
+    def save_dataframe(
+        data: pd.DataFrame, data_path: Path, logger: logging.Logger, index: bool = False
+    ):
         """Save the dataframe to a csv file
 
         Args:
@@ -63,7 +65,7 @@ class Helper():
             index (bool, optional): index parameter for to_csv. Defaults to False.
         """
         data.to_csv(data_path, index=index)
-        logger.info(f'Data saved to {data_path}')
+        logger.info(f"Data saved to {data_path}")
 
     @staticmethod
     @ensure_annotations
@@ -74,8 +76,8 @@ class Helper():
             reports (dict): dictionary of evaluation reports
             reports_path (string): directory where the evaluation reports needs to be saved
         """
-        with open(reports_path, 'w') as f:
+        with open(reports_path, "w") as f:
             # for key, value in reports.items():
             #     f.write(f'{key}: {value}\n')
             json.dump(reports, f, indent=4)
-        print(f'Evaluation reports saved to {reports_path}')
+        print(f"Evaluation reports saved to {reports_path}")

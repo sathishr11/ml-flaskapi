@@ -44,4 +44,4 @@ class TrainingParams:
     optuna_trials: int
     mlflow_experiment_name: str
     mlflow_artifacts_path: str
-    mlflow_model_registry_name: str    
+    mlflow_model_registry_name: str

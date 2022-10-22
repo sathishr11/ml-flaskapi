@@ -6,16 +6,16 @@ import sys
 
 STAGE_NAME = "Training Stage for regression"
 
+
 def main():
     config = ConfigurationManager()
     training_config = config.get_training_config()
     regression_params = config.get_regression_params()
     training_model = TrainModel(
-        config=training_config,
-        params=regression_params,
-        logger=logger
+        config=training_config, params=regression_params, logger=logger
     )
     training_model.train_model()
+
 
 if __name__ == "__main__":
     try:

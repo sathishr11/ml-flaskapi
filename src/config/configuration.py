@@ -1,6 +1,6 @@
 from src.utils import logger
 from src.utils import Helper
-from src.entity import DataIngestionConfig, TrainingParams 
+from src.entity import DataIngestionConfig, TrainingParams
 from src.entity import TrainTestSplitConfig
 from src.entity import DataTransformationConfig
 from src.entity import TrainingConfig
@@ -29,14 +29,11 @@ class ConfigurationManager(Singleton):
         self.data_ingestion_config = DataIngestionConfig(
             data_source=config.data_source,
             data_ingestion_dir=Path(
-                os.path.join(
-                    self.config.artifacts_root, 
-                    config.data_ingestion_dir
-                )
+                os.path.join(self.config.artifacts_root, config.data_ingestion_dir)
             ),
             raw_file_dir=Path(
                 os.path.join(
-                    self.config.artifacts_root, 
+                    self.config.artifacts_root,
                     config.data_ingestion_dir,
                     config.raw_file_dir,
                 )
@@ -54,13 +51,12 @@ class ConfigurationManager(Singleton):
             raw_file_path=Path(
                 os.path.join(
                     data_ingestion_config.raw_file_dir,
-                    data_ingestion_config.raw_file_name
+                    data_ingestion_config.raw_file_name,
                 )
             ),
             train_data_dir=Path(
                 os.path.join(
-                    self.config.artifacts_root,
-                    train_test_split_config.train_data_dir
+                    self.config.artifacts_root, train_test_split_config.train_data_dir
                 )
             ),
             train_file=train_test_split_config.train_file,
@@ -77,14 +73,11 @@ class ConfigurationManager(Singleton):
 
         self.data_transformation_config = DataTransformationConfig(
             transformed_data_dir=Path(
-                os.path.join(
-                    self.config.artifacts_root,
-                    config.data_transformation_dir
-                )
+                os.path.join(self.config.artifacts_root, config.data_transformation_dir)
             ),
             integer_features=config.integer_features,
             float_features=config.float_features,
-            map_function=config.map_function
+            map_function=config.map_function,
         )
 
         return self.data_transformation_config
@@ -98,21 +91,21 @@ class ConfigurationManager(Singleton):
                 os.path.join(
                     self.config.artifacts_root,
                     self.config.data_transformation.data_transformation_dir,
-                    self.config.train_test_split.train_file
+                    self.config.train_test_split.train_file,
                 )
             ),
             test_path=Path(
                 os.path.join(
                     self.config.artifacts_root,
                     self.config.data_transformation.data_transformation_dir,
-                    self.config.train_test_split.test_file
+                    self.config.train_test_split.test_file,
                 )
             ),
             regression_output=config.regression_output,
-            classification_output=config.classification_output
+            classification_output=config.classification_output,
         )
         return self.training_config
-    
+
     def get_regression_params(self) -> TrainingParams:
         self.regression_params = TrainingParams(
             models=self.params.regression_models,
@@ -129,6 +122,6 @@ class ConfigurationManager(Singleton):
             optuna_trials=self.params.optuna.no_of_trails,
             mlflow_experiment_name=self.params.ml_flow_cls.experiment_name,
             mlflow_artifacts_path=self.params.ml_flow_cls.artifacts_path,
-            mlflow_model_registry_name=self.params.ml_flow_cls.model_registry_name            
+            mlflow_model_registry_name=self.params.ml_flow_cls.model_registry_name,
         )
-        return self.classification_params    
+        return self.classification_params

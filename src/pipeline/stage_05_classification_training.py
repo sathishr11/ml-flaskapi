@@ -6,16 +6,16 @@ import sys
 
 STAGE_NAME = "Training Stage for classification"
 
+
 def main():
     config = ConfigurationManager()
     training_config = config.get_training_config()
     classification_params = config.get_classification_params()
     training_model = TrainClassificationModel(
-        config=training_config,
-        params=classification_params,
-        logger=logger
+        config=training_config, params=classification_params, logger=logger
     )
     training_model.train_model()
+
 
 if __name__ == "__main__":
     try:

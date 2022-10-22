@@ -4,6 +4,7 @@ import logging
 import threading
 from datetime import datetime
 
+
 class Singleton:
     _instance = None
     _lock = threading.Lock()

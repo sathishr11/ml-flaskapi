@@ -6,6 +6,7 @@ import sys
 
 STAGE_NAME = "Data Ingestion Stage"
 
+
 def main():
     config = ConfigurationManager()
     data_ingestion_config = config.get_data_ingestion_config()
