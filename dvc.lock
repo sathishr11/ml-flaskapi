@@ -1,0 +1,63 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: configs/config.yaml
+      md5: 370b3b8c761e11b44fba3593af90cbf1
+      size: 1165
+    - path: src/pipeline/stage_01_data_ingestion.py
+      md5: a8aedc110113920b83e8f7656ae3c770
+      size: 836
+    outs:
+    - path: artifacts/data_ingestion
+      md5: 276d9907bb073a95ab68d0a6949a03f5.dir
+      size: 20296
+      nfiles: 1
+  train_test_split:
+    cmd: python src/pipeline/stage_02_train_test_split.py
+    deps:
+    - path: artifacts/data_ingestion
+      md5: 276d9907bb073a95ab68d0a6949a03f5.dir
+      size: 20296
+      nfiles: 1
+    - path: configs/config.yaml
+      md5: 370b3b8c761e11b44fba3593af90cbf1
+      size: 1165
+    - path: src/pipeline/stage_02_train_test_split.py
+      md5: b8a6c31da5c3f735ee68ade3b315ebd6
+      size: 761
+    params:
+      params.yaml:
+        split_data:
+          test_size: 0.2
+          random_state: 42
+    outs:
+    - path: artifacts/split_data
+      md5: 06b3478863429434bb9a517f3b10002c.dir
+      size: 20658
+      nfiles: 2
+  data_transformation:
+    cmd: python src/pipeline/stage_03_data_transformation.py
+    deps:
+    - path: artifacts/split_data
+      md5: 06b3478863429434bb9a517f3b10002c.dir
+      size: 20658
+      nfiles: 2
+    - path: configs/config.yaml
+      md5: 370b3b8c761e11b44fba3593af90cbf1
+      size: 1165
+    - path: src/components/data_transformation.py
+      md5: 2f6378061dbdabc5c39dd083c0dcab62
+      size: 1862
+    - path: src/pipeline/stage_02_train_test_split.py
+      md5: b8a6c31da5c3f735ee68ade3b315ebd6
+      size: 761
+    - path: src/pipeline/stage_03_data_transformation.py
+      md5: 77811e843a20209dd6baae900c5f2634
+      size: 1238
+    outs:
+    - path: artifacts/transformed_data
+      md5: 4c2a4461315f8f87c20aaa1101557410.dir
+      size: 13555
+      nfiles: 2
