@@ -1,0 +1,180 @@
+split_data:
+  test_size: 0.2
+  random_state: 42
+
+ml_flow_reg:
+  experiment_name: Fire_regression1
+  artifacts_path: model
+  model_registry_name: Fire_regression1
+
+ml_flow_cls:
+  experiment_name: Fire_classification1
+  artifacts_path: model
+  model_registry_name: Fire_classification1
+
+optuna:
+  no_of_trails: 500
+
+regression_models:
+  LinearRegression:
+    module: sklearn.linear_model
+    params:
+      categorical:
+        fit_intercept: [True, False]
+
+  SVR:
+    module: sklearn.svm
+    params:
+      float:
+        C: [1.e-5, 2]
+
+  Ridge:
+    module: sklearn.linear_model
+    params:
+      float:
+        alpha: [0, 10]
+        tol: [0.001, 0.01]
+      categorical:
+        fit_intercept: [True, False]
+        solver: ["auto", "svd", "cholesky", "lsqr", "saga", "sag"]
+  Lasso:
+    module: sklearn.linear_model
+    params:
+      float:
+        alpha: [0, 10]
+      float_log:
+        tol: [0.001, 0.01]
+      categorical:
+        fit_intercept: [True, False]
+  ElasticNet:
+    module: sklearn.linear_model
+    params:
+      float_log:
+        tol: [0.001, 0.01]
+      float:
+        alpha: [0, 10]
+        l1_ratio: [0, 1]
+      categorical:
+        fit_intercept: [True, False]
+  KNeighborsRegressor:
+    module: sklearn.neighbors
+    params:
+      int:
+        n_neighbors: [1,10]
+      categorical:
+        weights: ["uniform", "distance"]
+        p: [1, 2]
+  DecisionTreeRegressor: 
+    module: sklearn.tree
+    params:
+      int:
+        max_depth: [1, 10]
+        min_samples_split: [2, 10]
+        min_samples_leaf: [1, 10]
+      categorical:
+        max_features: ["auto", "sqrt", "log2"]
+  RandomForestRegressor:
+    module: sklearn.ensemble
+    params:
+      int:
+        n_estimators: [1, 10]
+        max_depth: [1, 10]
+        min_samples_split: [2, 10]
+        min_samples_leaf: [1, 10]
+      categorical:
+        max_features: ["auto", "sqrt", "log2"]        
+  XGBRegressor:
+    module: xgboost
+    params:
+      int:
+        n_estimators: [10, 500]
+        max_depth: [3, 5]
+        min_child_weight: [0, 5]
+      float:
+        reg_alpha: [0, 6]
+        reg_lambda: [0, 2]
+        gamma: [0.05, 0.5]
+        learning_rate: [0.05, 0.5]
+        colsample_bytree: [0.4, 0.9]
+        subsample: [0.4, 0.9]
+      categorical:
+        nthread: [-1]      
+
+classification_models:
+  LogisticRegression:
+    module: sklearn.linear_model
+    params:
+      float:
+        C: [1.e-5, 1.e+5]
+      float_log:
+        tol: [0.001, 0.01]
+      categorical:
+        penalty: [ "l2", 'none']
+        fit_intercept: [True, False]
+  # SVC: 
+  #   module: sklearn.svm
+  #   params:
+  #     int:
+  #       degree: [1,10]
+  #     float:
+  #       C: [1.e-5, 10]
+  #       coef0: [-1, 1] 
+  #     float_log:
+  #       tol: [0.001, 0.01]
+  #     categorical:
+  #       kernel: ["linear", "poly", "rbf", "sigmoid"]
+  #       gamma: ["auto", "scale"]
+  #       shrinking: [True, False]
+  #       probability: [True]
+
+  KNeighborsClassifier: 
+    module: sklearn.neighbors
+    params:
+      int:
+        n_neighbors: [1, 10]
+      categorical:
+        weights: ["uniform", "distance"]
+        algorithm: ["auto", "ball_tree", "kd_tree", "brute"]
+        p: [1, 2]
+        metric: ["euclidean", "manhattan", "chebyshev", "minkowski"]
+
+  DecisionTreeClassifier: 
+    module: sklearn.tree
+    params:
+      int:
+        max_depth: [1, 10]
+        min_samples_split: [2, 10]
+        min_samples_leaf: [1, 10]
+      float:
+        ccp_alpha: [0, 1]
+      categorical:
+        criterion: ["gini", "entropy"]
+        max_features: ["auto", "sqrt", "log2"]
+
+  RandomForestClassifier:
+    module: sklearn.ensemble
+    params:
+      int:
+        n_estimators: [1, 100]
+        max_depth: [1, 10]  
+        min_samples_split: [2, 10]
+        min_samples_leaf: [1, 10]
+      categorical:
+        max_features: ["auto", "sqrt", "log2"]
+
+  XGBClassifier: 
+    module: xgboost
+    params:
+      int:
+        n_estimators: [10, 500]
+        max_depth: [3, 5]
+        min_child_weight: [0,5]
+      float:
+        reg_alpha: [0, 6]
+        reg_lambda: [0, 2]
+        gamma: [0, 4]
+        learning_rate: [0.05, 0.5]
+        colsample_bytree: [0.4, 0.9]
+        subsample: [0.4, 0.9]      
+      categorical:
+        nthread: [-1]
