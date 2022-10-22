@@ -29,7 +29,7 @@ class Logger(Singleton):
         os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
 
         # Create a custom logger
-        logging.basicConfig(level=logging.WARNING)
+        logging.basicConfig(level=logging.NOTSET)
         self.logger = logging.getLogger(__name__)
 
         # Create handlers
