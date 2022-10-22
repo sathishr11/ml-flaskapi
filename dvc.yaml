@@ -1,0 +1,54 @@
+stages:
+  data_ingestion:
+    cmd: python src/pipeline/stage_01_data_ingestion.py
+    deps:
+      - src/pipeline/stage_01_data_ingestion.py
+      - configs/config.yaml
+    outs:
+      - artifacts/data_ingestion
+
+  train_test_split:
+    cmd: python src/pipeline/stage_02_train_test_split.py
+    deps:
+      - src/pipeline/stage_02_train_test_split.py
+      - configs/config.yaml
+      - artifacts/data_ingestion
+    params:
+      - split_data
+    outs:
+      - artifacts/split_data
+
+  data_transformation:
+    cmd: python src/pipeline/stage_03_data_transformation.py
+    deps:
+      - src/pipeline/stage_03_data_transformation.py
+      - src/components/data_transformation.py
+      - configs/config.yaml
+      - src/pipeline/stage_02_train_test_split.py
+      - artifacts/split_data
+    outs:
+      - artifacts/transformed_data
+
+  reg_training:
+    cmd: python src/pipeline/stage_04_regression_training.py
+    deps:
+      - src/pipeline/stage_04_regression_training.py
+      - src/components/regression_model_training.py
+      - configs/config.yaml
+      - artifacts/transformed_data
+    params:
+      - ml_flow_reg
+      - optuna
+      - regression_models
+
+  classification_training:
+    cmd: python src/pipeline/stage_05_classification_training.py
+    deps:
+      - src/pipeline/stage_05_classification_training.py
+      - src/components/classification_model_training.py
+      - configs/config.yaml
+      - artifacts/transformed_data
+    params:
+      - ml_flow_cls
+      - optuna
+      - classification_models
