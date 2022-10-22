@@ -1,0 +1,50 @@
+artifacts_root: artifacts
+
+
+artifacts:
+  artifacts_dir: artifacts
+  raw_local_dir: raw_local_dir
+  raw_local_file: data.csv
+  split_data_dir: split_data_dir
+  train_file: train.csv
+  test_file: test.csv
+  model_dir: model_dir
+  reg_model_file: reg_model.pkl
+  cls_model_file: cls_model.pkl
+  reports_dir: reports_dir
+  reports_file: reports.json
+
+data_ingestion:
+  data_source: https://archive.ics.uci.edu/ml/machine-learning-databases/00547/Algerian_forest_fires_dataset_UPDATE.csv
+  data_ingestion_dir: data_ingestion
+  raw_file_dir: raw_local_dir
+  raw_file_name: data.csv
+
+train_test_split:
+  train_data_dir: split_data
+  train_file: train.csv
+  test_file: test.csv
+
+data_transformation:
+  data_transformation_dir: transformed_data
+  integer_features: 
+    - day
+    - month
+    - year
+    - Temperature
+    - RH
+    - Ws
+  float_features: [Rain, FFMC, DMC, DC, ISI, BUI, FWI]
+  map_function:
+    Region:
+      {'Bejaia Region Dataset ':0,'Sidi-Bel Abbes Region Dataset':1}
+    Classes:
+      {'not fire':0,'fire':1}
+
+training:
+  file_paths:
+    
+  regression_output:
+    FWI
+  classification_output:
+    Classes
